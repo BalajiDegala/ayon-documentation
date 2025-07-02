@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ayon-docs
-        image: <your-registry>/ayon-docs:latest
+        image: balajidd/ayondoc:1.0.0
         ports:
         - containerPort: 80
 ---
@@ -37,7 +37,7 @@ metadata:
   name: ayon-docs
 spec:
   rules:
-  - host: docs.example.com
+  - host: auondoc.d2-india.com
     http:
       paths:
       - path: /
