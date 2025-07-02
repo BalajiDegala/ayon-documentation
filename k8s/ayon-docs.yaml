@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ayon-docs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ayon-docs
+  template:
+    metadata:
+      labels:
+        app: ayon-docs
+    spec:
+      containers:
+      - name: ayon-docs
+        image: <your-registry>/ayon-docs:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ayon-docs
+spec:
+  selector:
+    app: ayon-docs
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ayon-docs
+spec:
+  rules:
+  - host: docs.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ayon-docs
+            port:
+              number: 80
